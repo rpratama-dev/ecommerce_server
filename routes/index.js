@@ -6,6 +6,6 @@ router.get("/", (req, res, next) => {
   res.status(200).json({ status: 200, message: "connected" });
 })
 
-router.post("/register", UserController.register)
+router.post("/register", UserController.register);
 
 module.exports = router;
