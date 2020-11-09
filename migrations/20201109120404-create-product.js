@@ -20,6 +20,15 @@ module.exports = {
       stock: {
         type: Sequelize.NUMBER
       },
+      UserId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onUpdate: 'NO ACTION',
+        onDelete: 'CASCADE'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

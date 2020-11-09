@@ -6,8 +6,16 @@ function generateToken(payload) {
 }
 
 function verifyToken(token) {
-  const decode = jwt.verify(token, process.env.SECRET_KEY);
-  return decode;
+  try {
+    const decode = jwt.verify(token, process.env.SECRET_KEY);
+    return { status: "tokenValid", decode };
+  } catch (err) {
+    err = {
+      status: 'JsonWebTokenError',
+      message: 'Authentication Failed'
+    }
+    return err;
+  }
 }
 
 module.exports = {

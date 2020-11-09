@@ -1,26 +1,34 @@
+const createError = require('http-errors');
 
-function authentication(req, res, next) {
+async function authentication(req, res, next) {
   const { access_token } = req.headers;
+  const message = 'Authentication Failed';
+  let decoded = {};
+
   try {
     if (!access_token) {
-      throw (createError(401, 'Authentication failed!'));
+      throw (createError(401, message));
     } else {
-      const decoded = verifyToken(access_token);
-      User.findOne({
-        where: { id: decoded.id }
-      })
-        .then((user) => {
-          if (!user) {
-            throw (createError(401, 'Authentication failed!'));
-          } else {
-            req.logedInUser = decoded;
-            next();
-          }
-        }).catch((err) => {
-          throw (createError(500, err.message));
-        });
+      const result = verifyToken(access_token);
+      if (result.status == 'JsonWebTokenError') {
+        throw createError(401, message)
+      } else {
+        decoded = result.decode;
+      }
+
+      const user = await User.findOne({ where: { id: decoded.id } })
+      if (!user) {
+        throw (createError(401, message));
+      } else {
+        req.logedInUser = decoded;
+        next();
+      }
     }
   } catch (err) {
     next(err);
   }
+}
+
+module.exports = {
+  authentication,
 }
