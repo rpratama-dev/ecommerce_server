@@ -24,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    role: {
+      type: DataTypes.STRING,
+    },
     email: {
       type: DataTypes.STRING,
       unique: {
@@ -52,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    hooks: {
+    hooks: {   
       beforeCreate(user) {
         user.password = hashPassword(user.password);
       },
