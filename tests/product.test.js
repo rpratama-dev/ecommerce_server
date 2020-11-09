@@ -118,7 +118,7 @@ describe('POST /api/products', () => {
       })
       .expect(401, {
         status: 401,
-        message: "Not authorize"
+        message: "Authentication Failed"
       });
     done();
   });
@@ -135,7 +135,7 @@ describe('POST /api/products', () => {
       })
       .expect(401, {
         status: 401,
-        message: "Not authorize"
+        message: "Authentication Failed"
       });
     done();
   });
