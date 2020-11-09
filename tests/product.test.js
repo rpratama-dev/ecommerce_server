@@ -57,7 +57,7 @@ describe('POST /api/products', () => {
           { error: "Price is required, can't be empty", field: "price" },
           { error: "Price cannot set minus", field: "price" },
           { error: "Price must be a number", field: "price" },
-          { error: "Stock required, can't be empty", field: "stock" },
+          { error: "Stock is required, can't be empty", field: "stock" },
           { error: "Stock cannot set minus", field: "stock" },
           { error: "Stock must be a number", field: "stock" },
         ]
