@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: "Iamge URL is required, can't be empty",
+          msg: "Image URL is required, can't be empty",
         },
         isUrl: {
           args: true,
@@ -37,29 +37,37 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     price: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
           args: true,
           msg: "Price is required, can't be empty"
-        }, 
+        },
+        isNumeric: {
+          args: true,
+          msg: "Price must be a number"
+        },
         min: {
-          args: 0,
+          args: [0],
           msg: "Price cannot set minus",
         }
       }
     },
     stock: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
           args: true,
           msg: "Stock is required, can't be empty"
-        }, 
+        },
         min: {
-          args: 0,
+          args: [0],
           msg: "Stock cannot set minus",
-        }
+        },
+        isNumeric: {
+          args: true,
+          msg: "Stock must be a number"
+        },
       }
     },
     UserId: DataTypes.INTEGER

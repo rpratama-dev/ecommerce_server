@@ -1,5 +1,6 @@
 const createError = require('http-errors');
-
+const { verifyToken } = require('../helpers/jwt');
+const { User } = require('../models');
 async function authentication(req, res, next) {
   const { access_token } = req.headers;
   const message = 'Authentication Failed';
@@ -29,6 +30,21 @@ async function authentication(req, res, next) {
   }
 }
 
+async function authorize(req, res, next) {
+  const UserId = req.logedInUser.id;
+  try {
+    const user = await User.findByPk(UserId);
+    console.log(user.role)
+    if (user.role === "admin") {
+      next();
+    } else {
+      throw createError(401, "Not authorize");
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
-  authentication,
+  authentication, authorize
 }

@@ -52,13 +52,11 @@ describe('POST /api/products', () => {
         status: 400,
         message: [
           { error: "Name is required, can't be empty", field: "name" },
-          { error: "Iamge URL is required, can't be empty", field: "image_url" },
+          { error: "Image URL is required, can't be empty", field: "image_url" },
           { error: "Image must valid a url", field: "image_url" },
-          { error: "Price is required, can't be empty", field: "price" },
-          { error: "Price cannot set minus", field: "price" },
+          { error: "Price is required, can't be empty", field: "price" }, 
           { error: "Price must be a number", field: "price" },
-          { error: "Stock is required, can't be empty", field: "stock" },
-          { error: "Stock cannot set minus", field: "stock" },
+          { error: "Stock is required, can't be empty", field: "stock" }, 
           { error: "Stock must be a number", field: "stock" },
         ]
       });
@@ -77,8 +75,8 @@ describe('POST /api/products', () => {
       })
       .expect(400, {
         status: 400,
-        message: [ 
-          { error: "Price cannot set minus", field: "price" },  
+        message: [
+          { error: "Price cannot set minus", field: "price" },
           { error: "Stock cannot set minus", field: "stock" },
         ]
       });
@@ -98,10 +96,8 @@ describe('POST /api/products', () => {
       .expect(400, {
         status: 400,
         message: [
-          { error: "Stock must be a number", field: "stock" },
-          { error: "Stock cannot set minus", field: "stock" },
-          { error: "Price must be a number", field: "price" },
-          { error: "Price cannot set minus", field: "price" },  
+          { error: "Price must be a number", field: "price" }, 
+          { error: "Stock must be a number", field: "stock" }, 
         ]
       });
     done();
@@ -109,7 +105,7 @@ describe('POST /api/products', () => {
 
   it('Test Case 6 : Error when not contain access_token', async (done) => {
     const response = await request(app)
-      .post('/api/products') 
+      .post('/api/products')
       .send({
         name: "Product 1",
         image_url: "https://www.jakartanotebook.com/images/products/100/63/37709/2/sepatu-sneaker-huarache-sporty-size-37-black-1.jpg",
@@ -125,7 +121,7 @@ describe('POST /api/products', () => {
 
   it('Test Case 7 : Error when not wrong access_token', async (done) => {
     const response = await request(app)
-      .post('/api/products') 
+      .post('/api/products')
       .set("access_token", "eyJhbGciOiJIUzI1NiJ9.sdsAo")
       .send({
         name: "Product 1",
