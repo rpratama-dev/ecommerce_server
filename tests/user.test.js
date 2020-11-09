@@ -106,27 +106,26 @@ describe('POST /api/login', () => {
   it('Test Case 1: Login succesfully', async (done) => {
     const response = await request(app)
       .post('/api/login')
-      .send({ email: "satria@mail.com", password: "admin123" })
-      .expect(200, {
-        status: 200,
-        user: {
-          id: expect.any(Number),
-          fullname: "Satria Permata",
-          email: "satria@mail.com"
-        },
-        access_token: expect.any(String)
-      });
+      .send({ email: "satria@mail.com", password: "admin123" });
+
+    const { status, body } = response;
+    const { user } = body;
+    expect(status).toBe(200);
+    expect(body).toHaveProperty("status", 200);
+    expect(body).toHaveProperty("access_token", expect.any(String));
+    expect(user).toHaveProperty("id", expect.any(Number));
+    expect(user).toHaveProperty("fullname", "Satria Permata");
+    expect(user).toHaveProperty("email", "satria@mail.com");
     done();
   });
-  
+
   it('Test Case 2: Login failed blank password and email', async (done) => {
     const response = await request(app)
       .post('/api/login')
       .send({ email: "", password: "" })
       .expect(401, {
         status: 401,
-        message: "Wrong Username / Password",
-        access_token: expect.any(String)
+        message: "Wrong Username / Password"
       });
     done();
   });
@@ -137,8 +136,7 @@ describe('POST /api/login', () => {
       .send({ email: "satria@mail.com", password: "wrong" })
       .expect(401, {
         status: 401,
-        message: "Wrong Username / Password",
-        access_token: expect.any(String)
+        message: "Wrong Username / Password"
       });
     done();
   });
@@ -149,10 +147,8 @@ describe('POST /api/login', () => {
       .send({ email: "satria.wrong@mail.com", password: "randompassword" })
       .expect(401, {
         status: 401,
-        message: "Wrong Username / Password",
-        access_token: expect.any(String)
+        message: "Wrong Username / Password"
       });
     done();
   });
-}); 
-  
+});
