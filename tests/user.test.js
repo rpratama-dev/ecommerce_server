@@ -42,7 +42,7 @@ describe('POST /api/register', () => {
     done();
   });
 
-  it('Test Case 3 : Test Register Failed, Value Empty', async (done) => {
+  it('Test Case 3 : Test Register Failed, all value empty', async (done) => {
     const response = await request(app)
       .post('/api/register')
       .send({ fullname: "", email: "", password: "" })
@@ -58,7 +58,7 @@ describe('POST /api/register', () => {
     done();
   });
 
-  it('Test Case 4 : Test Register Failed, Value Empty', async (done) => {
+  it('Test Case 4 : Test Register Failed, some value empty', async (done) => {
     const response = await request(app)
       .post('/api/register')
       .send({ fullname, email: "", password: "" })
@@ -73,7 +73,7 @@ describe('POST /api/register', () => {
     done();
   });
 
-  it('Test Case 5 : Test Register Failed, Password minimal 8 character', async (done) => {
+  it('Test Case 5 : Test Register Failed, Email empty & Password less than 8 character', async (done) => {
     const response = await request(app)
       .post('/api/register')
       .send({ fullname, email: "", password: "123456" })
@@ -87,7 +87,7 @@ describe('POST /api/register', () => {
     done();
   });
 
-  it('Test Case 6 : Test Register Failed, Password minimal 8 character', async (done) => {
+  it('Test Case 6 : Test Register Failed, email not empty & Password less than 8 character', async (done) => {
     const response = await request(app)
       .post('/api/register')
       .send({ fullname, email, password: "123456" })

@@ -20,14 +20,5 @@ app.use(errorHandler);
 //   console.log("App running on port http://localhost:" + port);
 // })
 
-// function createServerTest() {
-//   const app = express();
-//   app.use(express.json());
-//   app.use("/api", routes);
-//   app.use(errorHandler)
-//   return app;
-// }
-
-
 module.exports = app;
 

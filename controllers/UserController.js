@@ -9,10 +9,9 @@ class UserController {
     try {
       const { fullname, email, password } = req.body;
       const input = { fullname, email, password };
-      const user = await User.create(input);
-
+      const user = await User.create(input); 
       res.status(201).json({
-        status: 201, user
+        status: 201, user: { id: user.id, fullname, email }
       })
 
     } catch (error) {
