@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --forceExit --runInBand --verbose --detectOpenHandles",
+    "test": "jest --runInBand --forceExit --verbose --detectOpenHandles",
     "dev": "NODE_ENV=development nodemon ./bin/www",
     "start": "node server.js"
   },

@@ -7,8 +7,8 @@ class UserController {
 
   static async register(req, res, next) {
     try {
-      const { fullname, email, password } = req.body;
-      const input = { fullname, email, password };
+      const { fullname, role, email, password } = req.body;
+      const input = { fullname, role, email, password };
       const user = await User.create(input);
 
       res.status(201).json({
@@ -32,7 +32,7 @@ class UserController {
       } else {
         const { id, fullname, email, password } = user;
         const match = comparePassword(inputPassword, password);
-        
+
         if (!match) {
           throw (createError(401, message));
         } else {

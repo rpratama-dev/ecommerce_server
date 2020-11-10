@@ -3,33 +3,45 @@ const app = require('../server');
 const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
 
-afterAll(async (done) => {
-  await queryInterface.bulkDelete("Users");
-  done();
-})
+// afterAll(async (done) => {
+//   await queryInterface.bulkDelete("Users");
+//   done();
+// })
+
+// Admin -> In console.log use token admin & customer to test in product test.
+// const role = "admin";
+// const email = "satria@mail.com";
+// const password = "admin123";
+// const fullname = "Satria Permata";
+
+// Customer
+const role = "customer";
+const email = "customer@mail.com";
+const password = "customer123";
+const fullname = "Customer Permata";
 
 describe('POST /api/register', () => {
   // Test Case 1 : Register Success
-  it('Test Case 1 : Register Success', async (done) => {
+  it('Test Case 1 : Test Register Success', async (done) => {
     const response = await request(app)
       .post('/api/register')
-      .send({ fullname: "Satria Permata", email: "satria@mail.com", password: "admin123" });
+      .send({ fullname, role, email, password });
     const { body, status } = response;
     // Expectation
     const { user } = body;
     expect(status).toBe(201);
     expect(body).toHaveProperty("status", 201);
     expect(user).toHaveProperty("id", expect.any(Number));
-    expect(user).toHaveProperty("fullname", "Satria Permata");
-    expect(user).toHaveProperty("email", "satria@mail.com");
+    expect(user).toHaveProperty("fullname", fullname);
+    expect(user).toHaveProperty("email", email);
     done();
   });
 
-  // Test Case 2 : Register Failed, Email already exists
-  it('Test Case 2 : Register Failed, Email already exists', async (done) => {
+  // Test Case 2 : Test Register Failed, Email already exists
+  it('Test Case 2 : Test Register Failed, Email already exists', async (done) => {
     const response = await request(app)
       .post('/api/register')
-      .send({ fullname: "Satria Permata", email: "satria@mail.com", password: "admin123" })
+      .send({ fullname, role, email, password })
       .expect(400, {
         status: 400,
         message: [
@@ -39,8 +51,8 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 3 : Register Failed, Value Empty
-  it('Test Case 3 : Register Failed, Value Empty', async (done) => {
+  // Test Case 3 : Test Register Failed, Value Empty
+  it('Test Case 3 : Test Register Failed, Value Empty', async (done) => {
     const response = await request(app)
       .post('/api/register')
       .send({ fullname: "", email: "", password: "" })
@@ -56,11 +68,11 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 4 : Register Failed, Some Value Empty
-  it('Test Case 4 : Register Failed, Value Empty', async (done) => {
+  // Test Case 4 : Test Register Failed, Some Value Empty
+  it('Test Case 4 : Test Register Failed, Value Empty', async (done) => {
     const response = await request(app)
       .post('/api/register')
-      .send({ fullname: "Riyan Pratama", email: "", password: "" })
+      .send({ fullname, email: "", password: "" })
       .expect(400, {
         status: 400,
         message: [
@@ -72,11 +84,11 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 6 : Register Failed, Password minimal 8 character
-  it('Test Case 6 : Register Failed, Password minimal 8 character', async (done) => {
+  // Test Case 6 : Test Register Failed, Password minimal 8 character
+  it('Test Case 6 : Test Register Failed, Password minimal 8 character', async (done) => {
     const response = await request(app)
       .post('/api/register')
-      .send({ fullname: "Riyan Pratama", email: "", password: "123456" })
+      .send({ fullname, email: "", password: "123456" })
       .expect(400, {
         status: 400,
         message: [
@@ -87,11 +99,11 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 7 : Register Failed, Password minimal 8 character
-  it('Test Case 7 : Register Failed, Password minimal 8 character', async (done) => {
+  // Test Case 7 : Test Register Failed, Password minimal 8 character
+  it('Test Case 7 : Test Register Failed, Password minimal 8 character', async (done) => {
     const response = await request(app)
       .post('/api/register')
-      .send({ fullname: "Riyan Pratama", email: "satria@mail.com", password: "123456" })
+      .send({ fullname, email, password: "123456" })
       .expect(400, {
         status: 400,
         message: [
@@ -106,7 +118,7 @@ describe('POST /api/login', () => {
   it('Test Case 1: Login succesfully', async (done) => {
     const response = await request(app)
       .post('/api/login')
-      .send({ email: "satria@mail.com", password: "admin123" });
+      .send({ email, password });
 
     const { status, body } = response;
     const { user } = body;
@@ -114,8 +126,9 @@ describe('POST /api/login', () => {
     expect(body).toHaveProperty("status", 200);
     expect(body).toHaveProperty("access_token", expect.any(String));
     expect(user).toHaveProperty("id", expect.any(Number));
-    expect(user).toHaveProperty("fullname", "Satria Permata");
-    expect(user).toHaveProperty("email", "satria@mail.com");
+    expect(user).toHaveProperty("fullname", fullname);
+    expect(user).toHaveProperty("email", email);
+    console.log("Use this Token: ", body.access_token)
     done();
   });
 

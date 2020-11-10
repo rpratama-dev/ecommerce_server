@@ -11,9 +11,12 @@ router.get("/", (req, res, next) => {
 router.post("/register", UserController.register);
 router.post("/login", UserController.login);
 
+// For admin and customer no need authentication 
+router.get("/products", ProductController.index);
+
 router.use(authentication);
 
-router.get("/products", authorize, ProductController.index);
+// For Admin Only
 router.post("/products", authorize, ProductController.store);
 router.get("/products/:id", authorize, ProductController.show);
 router.put("/products/:id", authorize, ProductController.update);
