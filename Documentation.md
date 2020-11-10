@@ -1,4 +1,7 @@
-# **API Documentation** Kanban
+# **API Documentation** Ecommerce
+
+# **VUESHOP**
+
 ## Local server : 
   `http://localhost:3000/api`
 ---- 
