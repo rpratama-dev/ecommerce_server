@@ -8,20 +8,12 @@ const { queryInterface } = sequelize;
 //   done();
 // })
 
-// Admin -> In console.log use token admin & customer to test in product test.
-// const role = "admin";
-// const email = "satria@mail.com";
-// const password = "admin123";
-// const fullname = "Satria Permata";
-
-// Customer
-const role = "customer";
+// Customer 
 const email = "customer@mail.com";
 const password = "customer123";
 const fullname = "Customer Permata";
 
 describe('POST /api/register', () => {
-  // Test Case 1 : Register Success
   it('Test Case 1 : Test Register Success', async (done) => {
     const response = await request(app)
       .post('/api/register')
@@ -37,7 +29,6 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 2 : Test Register Failed, Email already exists
   it('Test Case 2 : Test Register Failed, Email already exists', async (done) => {
     const response = await request(app)
       .post('/api/register')
@@ -51,7 +42,6 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 3 : Test Register Failed, Value Empty
   it('Test Case 3 : Test Register Failed, Value Empty', async (done) => {
     const response = await request(app)
       .post('/api/register')
@@ -68,7 +58,6 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 4 : Test Register Failed, Some Value Empty
   it('Test Case 4 : Test Register Failed, Value Empty', async (done) => {
     const response = await request(app)
       .post('/api/register')
@@ -84,8 +73,7 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 6 : Test Register Failed, Password minimal 8 character
-  it('Test Case 6 : Test Register Failed, Password minimal 8 character', async (done) => {
+  it('Test Case 5 : Test Register Failed, Password minimal 8 character', async (done) => {
     const response = await request(app)
       .post('/api/register')
       .send({ fullname, email: "", password: "123456" })
@@ -99,8 +87,7 @@ describe('POST /api/register', () => {
     done();
   });
 
-  // Test Case 7 : Test Register Failed, Password minimal 8 character
-  it('Test Case 7 : Test Register Failed, Password minimal 8 character', async (done) => {
+  it('Test Case 6 : Test Register Failed, Password minimal 8 character', async (done) => {
     const response = await request(app)
       .post('/api/register')
       .send({ fullname, email, password: "123456" })
@@ -115,6 +102,7 @@ describe('POST /api/register', () => {
 });
 
 describe('POST /api/login', () => {
+
   it('Test Case 1: Login succesfully', async (done) => {
     const response = await request(app)
       .post('/api/login')
