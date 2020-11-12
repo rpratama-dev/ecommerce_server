@@ -29,7 +29,7 @@ class UserController {
       if (!user) {
         throw (createError(401, message))
       } else {
-        const { id, fullname, email, password } = user;
+        const { id, fullname, role, email, password } = user;
         const match = comparePassword(inputPassword, password);
 
         if (!match) {
@@ -37,6 +37,7 @@ class UserController {
         } else {
           const payload = { id, fullname, email };
           const access_token = generateToken(payload);
+          payload.role = role;
           res.status(200).json({ status: 200, user: payload, access_token });
         }
       }

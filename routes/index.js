@@ -1,8 +1,7 @@
-const ProductController = require('../controllers/ProductController');
 const UserController = require('../controllers/UserController');
-const { authentication, authorize } = require('../middleware/auth');
 
 const router = require('express').Router();
+const productRouter = require('./product-router');
 
 router.get("/", (req, res, next) => {
   res.status(200).json({ status: 200, message: "connected" });
@@ -11,18 +10,6 @@ router.get("/", (req, res, next) => {
 router.post("/register", UserController.register);
 router.post("/login", UserController.login);
 
-// For admin and customer no need authentication 
-router.get("/products", ProductController.index); 
-router.get("/products/:id", ProductController.show);
-
-router.use(authentication);
-
-// For Admin Only
-router.post("/products", authorize, ProductController.store);
-router.put("/products/:id", authorize, ProductController.update);
-// router.patch("/products/:id", authorize, ProductController.patch);
-router.delete("/products/:id", authorize, ProductController.delete);
-
-
+router.use('/products', productRouter)
 
 module.exports = router;

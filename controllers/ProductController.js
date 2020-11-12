@@ -5,8 +5,7 @@ class ProductController {
 
   static async index(req, res, next) {
     try {
-      const products = await Product.findAll({ attributes: { exclude: ['UserId'] } });
-      console.log(products)
+      const products = await Product.findAll({ attributes: { exclude: ['UserId'] }, order: [['id', 'DESC']] });
       res.status(200).json({ status: 200, products });
     } catch (error) {
       next(error)
@@ -27,7 +26,6 @@ class ProductController {
 
   static async show(req, res, next) {
     const { id } = req.params;
-    console.log(id)
     try {
       const product = await Product.findByPk(id, { attributes: { exclude: ['UserId'] } });
       res.status(200).json({ status: 200, product });
@@ -38,7 +36,6 @@ class ProductController {
 
   static async update(req, res, next) {
     const id = req.params.id;
-    console.log("puttttt ===>", id)
     const { name, image_url, price, stock } = req.body;
     const input = { name, image_url, price, stock };
     try {
