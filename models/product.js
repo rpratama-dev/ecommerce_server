@@ -72,7 +72,15 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
-    CategoryId: DataTypes.INTEGER,
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isNumeric: {
+          args: true,
+          msg: "Category must be a number"
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

@@ -14,8 +14,8 @@ class ProductController {
 
   static async store(req, res, next) {
     const UserId = req.logedInUser.id;
-    const { name, image_url, price, stock } = req.body;
-    const input = { name, image_url, price, stock, UserId };
+    const { name, image_url, price, stock, CategoryId } = req.body;
+    const input = { name, image_url, price, stock, CategoryId, UserId };
     try {
       const product = await Product.create(input);
       res.status(201).json({ status: 201, product })
@@ -36,8 +36,8 @@ class ProductController {
 
   static async update(req, res, next) {
     const id = req.params.id;
-    const { name, image_url, price, stock } = req.body;
-    const input = { name, image_url, price, stock };
+    const { name, image_url, price, stock, CategoryId } = req.body;
+    const input = { name, image_url, price, stock, CategoryId };
     try {
       const product = await Product.update(input, { where: { id }, returning: true });
       res.status(200).json({ status: 200, product: product[1][0] }); 
