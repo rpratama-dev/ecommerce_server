@@ -15,7 +15,7 @@ class CategoryController {
     const { name } = req.body
     try {
       const category = await Category.create({ name })
-      res.status(201).json({ status: 200, category })
+      res.status(201).json({ status: 201, category })
     } catch (err) {
       next(err)
     }
@@ -34,7 +34,6 @@ class CategoryController {
   static async update(req, res, next) {
     const { id } = req.params;
     const { name } = req.body;
-    console.log(name)
     try {
       const category = await Category.update({ name }, { where: { id }, returning: true})
       res.status(200).json({ status: 200, category: category[1][0] })

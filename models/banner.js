@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, ValidationError
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Banner extends Model {
@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: 'Status is required, can\'t be empty!'
+        },
+        isIn: {
+          args: [['true', 'false']],
+          msg: 'Status must be true or false'
         }
       }
     },
@@ -77,9 +81,18 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     validate: {
-      checkDate() {
+      checkStartDate() {
+        // Check Start Date
+        let yesterday = new Date();
+        console.log(yesterday, 'yesterday')
+        if (Date.parse(this.start_date) < yesterday) {
+          throw new ValidationError('Start date cannot be set less than today!');
+        }
+      },
+      checkEndDate() {
+        // Check End Date
         let startDate = new Date(this.start_date);
-        startDate.setDate(startDate.getDate() - 1);
+        console.log(startDate, 'startDate')
         if (Date.parse(this.end_date) < startDate) {
           throw new ValidationError('End date cannot be set less than start date!');
         }
