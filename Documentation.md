@@ -185,7 +185,8 @@
     "name": "Product Name",
     "image_url": "http://cloou.img/product-img.jpg",
     "price": 10000,
-    "stock": 30
+    "stock": 30,
+    "CategoryId: 1
   }
   ```
 
@@ -202,6 +203,7 @@
         "image_url": "http://cloou.img/product-img.jpg",
         "price": 10000,
         "stock": 30,
+        "CategoryId": 1,
         "UserId": 5,
         "updatedAt": "2020-11-10T23:07:09.098Z",
         "createdAt": "2020-11-10T23:07:09.098Z"
@@ -225,6 +227,7 @@
             { "error": "Price must be a number", "field": "price" },
             { "error": "Stock is required, can't be empty", "field": "stock" },
             { "error": "Stock must be a number", "field": "stock" },
+            { "error": "Category must be a number", "field": "CategoryId" },
           ]
         }
         ```
@@ -285,7 +288,14 @@
         "stock": 30,
         "UserId": 5,
         "updatedAt": "2020-11-10T23:07:09.098Z",
-        "createdAt": "2020-11-10T23:07:09.098Z"
+        "createdAt": "2020-11-10T23:07:09.098Z",
+        "Category": {
+          "id": 1,
+          "name": "Pakaian Pria",
+          "type": "product",
+          "createdAt": "2020-11-13T23:49:29.099Z",
+          "updatedAt": "2020-11-13T23:49:29.099Z"
+        }
       }, {...}]
     }
     ```
@@ -379,7 +389,8 @@
     "name": "Product Name Edit",
     "image_url": "http://cloou.img/product-img.jpg",
     "price": 12000,
-    "stock": 5
+    "stock": 5,
+    "CategoryId: 1
   }
   ```
 
@@ -396,6 +407,7 @@
         "image_url": "http://cloou.img/product-img.jpg",
         "price": 12000,
         "stock": 5,
+        "CategoryId": 1,
         "updatedAt": "2020-11-10T23:17:09.098Z",
         "createdAt": "2020-11-10T23:07:09.098Z"
       }
@@ -418,6 +430,7 @@
             { "error": "Price must be a number", "field": "price" },
             { "error": "Stock is required, can't be empty", "field": "stock" },
             { "error": "Stock must be a number", "field": "stock" },
+            { "error": "Category must be a number", "field": "CategoryId" },
           ]
         }
         ```
@@ -673,7 +686,14 @@
           "CategoryId": 2,
           "UserId": 5,
           "createdAt": "2020-11-14T00:31:05.407Z",
-          "updatedAt": "2020-11-14T00:31:05.407Z"
+          "updatedAt": "2020-11-14T00:31:05.407Z",
+          "Category": {
+            "id": 2,
+            "name": "November Ceria",
+            "type": "banner",
+            "createdAt": "2020-11-14T07:45:09.270Z",
+            "updatedAt": "2020-11-14T07:45:09.270Z"
+          }
         }, {...}
       ]
     }
@@ -1079,7 +1099,8 @@
 
   ```json
   {
-    "name": "Pakaian Pria"
+    "name": "Pakaian Pria",
+    "type": "product or banner"
   }
   ```
 
@@ -1093,6 +1114,7 @@
       "category": {
         "id": 1,
         "name": "Pakaian Pria",
+        "type": "banner",
         "updatedAt": "2020-11-13T23:49:29.099Z",
         "createdAt": "2020-11-13T23:49:29.099Z"
       }
@@ -1109,6 +1131,7 @@
           "status": 400,
           "message": [
             { "error": "Category name is required, can't be empty!", "field": "name" },
+            { "error": "Category type must be product or banner", "field": "type" },
             { "error": "Category already exist", "field": "name" },
           ]
         }
@@ -1172,6 +1195,7 @@
         {
           "id": 1,
           "name": "Pakaian Pria",
+          "type": "product",
           "createdAt": "2020-11-14T01:05:25.273Z",
           "updatedAt": "2020-11-14T01:05:25.273Z"
         }, {...}
@@ -1317,6 +1341,7 @@
       "category": {
         "id": 1,
         "name": "Pakaian Wanita",
+        "type": "product",
         "updatedAt": "2020-11-13T23:49:29.099Z",
         "createdAt": "2020-11-13T23:49:29.099Z"
       }
@@ -1333,6 +1358,7 @@
           "status": 400,
           "message": [
             { "error": "Category name is required, can't be empty!", "field": "name" },
+            { "error": "Category type must be product or banner!", "field": "type" },
             { "error": "Category already exist", "field": "name" },
           ]
         }
