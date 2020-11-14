@@ -12,9 +12,9 @@ class CategoryController {
   }
 
   static async store(req, res, next) {
-    const { name } = req.body
+    const { name, type } = req.body
     try {
-      const category = await Category.create({ name })
+      const category = await Category.create({ name, type })
       res.status(201).json({ status: 201, category })
     } catch (err) {
       next(err)

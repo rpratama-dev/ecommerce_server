@@ -28,6 +28,15 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Category name is required, can\'t be empty!'
         }
       }
+    },
+    type: {
+      type: DataTypes.STRING,
+      validate: {
+        isIn: {
+          args: [['product', 'banner']],
+          msg: 'Category type must be product or banner'
+        }
+      }
     }
   }, {
     sequelize,

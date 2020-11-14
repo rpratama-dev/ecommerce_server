@@ -3,12 +3,15 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const categories = [
-      { name: 'Baju Pria', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Baju Wanita', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Sepatu Pria', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Sepatu Wanita', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Tas Wanita', createdAt: new Date(), updatedAt: new Date() },
-      { name: 'Tas Pria', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Pakaian Pria', type: 'product', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Pakaian Anak', type: 'product', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Pakaian Wanita', type: 'product', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Baju Pria', type: 'product', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'November Ceria', type: 'banner', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Happy New Year', type: 'banner', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Desember Ceria', type: 'banner', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Gajian Happy', type: 'banner', createdAt: new Date(), updatedAt: new Date() },
+      { name: 'Payday', type: 'banner', createdAt: new Date(), updatedAt: new Date() },
     ]
     await queryInterface.bulkInsert('Categories', categories, {})
     /**
