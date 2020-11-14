@@ -1,10 +1,10 @@
-const { Banner } = require('../models');
+const { Banner, Category } = require('../models');
 
 class BannerController {
 
   static async index(req, res, next) {
     try {
-      const banners = await Banner.findAll({ order: [['id', 'DESC']]})
+      const banners = await Banner.findAll({ include: Category ,order: [['id', 'DESC']]})
       res.status(200).json({ status: 200, banners })
     } catch (error) {
       next(error)
@@ -26,7 +26,7 @@ class BannerController {
   static async show(req, res, next) {
     const { id } = req.params
     try {
-      const banner = await Banner.findByPk(id)
+      const banner = await Banner.findByPk(id, { include: Category })
       res.status(200).json({ status: 200, banner })
     } catch (error) {
       next(error)

@@ -1,11 +1,11 @@
-const { Product } = require('../models');
+const { Product, Category } = require('../models');
 const createError = require('http-errors');
 
 class ProductController {
 
   static async index(req, res, next) {
     try {
-      const products = await Product.findAll({ attributes: { exclude: ['UserId'] }, order: [['id', 'DESC']] });
+      const products = await Product.findAll({ include: Category, attributes: { exclude: ['UserId'] }, order: [['id', 'DESC']] });
       res.status(200).json({ status: 200, products });
     } catch (error) {
       next(error)
@@ -27,7 +27,7 @@ class ProductController {
   static async show(req, res, next) {
     const { id } = req.params;
     try {
-      const product = await Product.findByPk(id, { attributes: { exclude: ['UserId'] } });
+      const product = await Product.findByPk(id, { include: Category, attributes: { exclude: ['UserId'] } });
       res.status(200).json({ status: 200, product });
     } catch (error) {
       next(error)
