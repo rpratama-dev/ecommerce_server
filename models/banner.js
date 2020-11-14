@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     is_active: {
       type: DataTypes.STRING,
+      defaultValue: "true",
       validate: {
         notEmpty: {
           args: true,
@@ -76,7 +77,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    CategoryId: DataTypes.INTEGER,
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isNumeric: {
+          args: true,
+          msg: 'Please select banner category'
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,
@@ -84,6 +93,7 @@ module.exports = (sequelize, DataTypes) => {
       checkStartDate() {
         // Check Start Date
         let yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
         console.log(yesterday, 'yesterday')
         if (Date.parse(this.start_date) < yesterday) {
           throw new ValidationError('Start date cannot be set less than today!');

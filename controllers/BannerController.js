@@ -12,9 +12,9 @@ class BannerController {
   }
 
   static async store(req, res, next) {
-    const { name, image_url, is_active, start_date, end_date, CategoryId } = req.body;
+    const { name, image_url, start_date, end_date, CategoryId } = req.body;
     const UserId = req.logedInUser.id;
-    const input = { name, image_url, is_active, start_date, end_date, CategoryId, UserId };
+    const input = { name, image_url, start_date, end_date, CategoryId, UserId };
     try {
       const banner = await Banner.create(input)
       res.status(201).json({ status: 201, banner })

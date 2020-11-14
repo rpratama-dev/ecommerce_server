@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
   Category.init({
     name: {
       type: DataTypes.STRING,
+      unique: {
+        args: true,
+        msg: 'Category already exist'
+      },
       validate: {
         notEmpty: {
           args: true,
