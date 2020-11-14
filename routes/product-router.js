@@ -8,11 +8,12 @@ router.get("/", ProductController.index);
 router.get("/:id", ProductController.show);
 
 router.use(authentication);
+router.use(authorize);
 
 // For Admin Only
-router.post("/", authorize, ProductController.store);
-router.put("/:id", authorize, ProductController.update);
-router.delete("/:id", authorize, ProductController.delete);
-// router.patch("/:id", authorize, ProductController.patch);
+router.post("/", ProductController.store);
+router.put("/:id", ProductController.update);
+router.delete("/:id", ProductController.delete);
+// router.patch("/:id", ProductController.patch);
 
 module.exports = router

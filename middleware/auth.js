@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const { verifyToken } = require('../helpers/jwt');
-const { User } = require('../models');
+const { User, Category, Banner } = require('../models');
 
 async function authentication(req, res, next) {
   const { access_token } = req.headers;
@@ -45,6 +45,34 @@ async function authorize(req, res, next) {
   }
 }
 
+async function checkCategory(req, res, next) {
+  const { id } = req.params
+  try {
+    const category = await Category.findByPk(id)
+    if (!category) {
+      throw createError(404, 'Category ID Not Found')
+    } else {
+      next()
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function checkBanner(req, res, next) {
+  const { id } = req.params
+  try {
+    const banner = await Banner.findByPk(id)
+    if (!banner) {
+      throw createError(404, 'Banner ID Not Found')
+    } else {
+      next()
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
-  authentication, authorize
+  authentication, authorize, checkCategory, checkBanner
 }
