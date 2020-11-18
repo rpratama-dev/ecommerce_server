@@ -1454,3 +1454,218 @@
         ```
 
   </details>
+
+<br>
+
+# Whistlist
+
+## 1. Create New Whistlist
+
+<details>
+  <summary>Click to expand!</summary>
+
+- **URL**
+
+  `/whistlist`
+
+- **Method:**
+
+  `POST`
+
+- **Headers**
+
+  ```json
+  { "access_token": "eyJhbGciOiJIUzI1NiJ9. ..." }
+  ```
+
+- **Data Params**
+
+  _data_
+
+  ```json
+  {
+    "ProductId": 1
+  }
+  ```
+
+- **Success Response**
+
+  - **Code:** 201 <br />
+    **Content:**
+    ```json
+    {
+      "status": 201,
+      "whistlist": {
+          "id": 1,
+          "UserId": 1,
+          "ProductId": 1,
+          "updatedAt": "2020-11-18T00:40:15.984Z",
+          "createdAt": "2020-11-18T00:40:15.984Z"
+        }
+    }
+    ```
+
+- **Error Response:**
+
+      * **Code:** 400 BAD  REQUEST <br />
+        **Content:**
+
+        ```json
+        {
+          "message": "Product already in your whistlist",
+          "status": 400
+        }
+        ```
+
+      OR
+
+      * **Code:** 401 UNAUTHORIZE <br />
+        **Content:**
+        ```json
+        {
+          "status": 401,
+          "message": "Authentication Failed"
+        }
+        ```
+
+      OR
+
+      * **Code:** 500 INTERNAL SERVER ERROR <br />
+        **Content:**
+        ```json
+        { "error" : "Internal Server Error Message" }
+        ```
+
+  </details>
+
+## 2. Read All Whistlist
+
+<details>
+  <summary>Click to expand!</summary>
+
+- **URL**
+
+  `/whistlist`
+
+- **Method:**
+
+  `GET`
+
+**Headers**
+
+```json
+{ "access_token": "eyJhbGciOiJIUzI1NiJ9. ..." }
+```
+
+- **Success Response**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "status": 200,
+      "whistlists": [
+          {
+            "id": 1,
+            "Product": {
+              "id": 1,
+              "name": "Product Name",
+              "image_url": "https://image.url/image.jpg",
+              "price": 10000,
+              "stock": 30,
+              "CategoryId": null,
+              "UserId": 5,
+              "createdAt": "2020-11-18T00:01:13.250Z",
+              "updatedAt": "2020-11-18T00:01:13.250Z"
+            }
+          }
+        ]
+      }
+    ```
+
+- **Error Response:**
+
+      * **Code:** 401 UNAUTHORIZE <br />
+        **Content:**
+        ```json
+        {
+          "status": 401,
+          "message": "Authentication Failed"
+        }
+        ```
+
+      OR
+
+      * **Code:** 500 INTERNAL SERVER ERROR <br />
+        **Content:**
+        ```json
+        { "error" : "Internal Server Error" }
+        ```
+
+  </details>
+
+## 3. Delete Whistlist
+
+<details>
+  <summary>Click to expand!</summary>
+
+- **URL**
+
+  `/whistlists/:id`
+
+- **URL Params:**
+
+  `id=[integer]`
+
+- **Method:**
+
+  `DELETE`
+
+- **Headers**
+
+  ```json
+  { "access_token": "eyJhbGciOiJIUzI1NiJ9. ..." }
+  ```
+
+- **Success Response**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "status": 200,
+      "message": "Product deleted from your whistlist"
+    }
+    ```
+
+- **Error Response:**
+
+      * **Code:** 401 UNAUTHORIZE <br />
+        **Content:**
+        ```json
+        {
+          "status": 401,
+          "message": "Authentication Failed"
+        }
+        ```
+      
+      OR
+
+      * **Code:** 404 NOT FOUND <br />
+        **Content:**
+        ```json
+        {
+          "status": 404,
+          "message": "Whistlist ID Not Found"
+        }
+        ```
+
+      OR
+
+      * **Code:** 500 INTERNAL SERVER ERROR <br />
+        **Content:**
+        ```json
+        { "error" : "Internal Server Error" }
+        ```
+
+  </details>

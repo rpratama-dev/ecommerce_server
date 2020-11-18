@@ -1,10 +1,20 @@
-const { Category } = require('../models')
+const { Category, Product } = require('../models')
 
 class CategoryController {
 
   static async index(req, res, next) {
     try {
       const categories = await Category.findAll({ order: [['name', 'ASC']]})
+      res.status(200).json({ status: 200, categories })
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async productCategory(req, res, next) {
+    const { id } = req.params
+    try {
+      const categories = await Category.findByPk(id, { order: [['name', 'ASC']], include: Product })
       res.status(200).json({ status: 200, categories })
     } catch (err) {
       next(err)

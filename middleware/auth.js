@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const { verifyToken } = require('../helpers/jwt');
-const { User, Category, Banner } = require('../models');
+const { User, Category, Banner, Whistlist } = require('../models');
 
 async function authentication(req, res, next) {
   const { access_token } = req.headers;
@@ -73,6 +73,20 @@ async function checkBanner(req, res, next) {
   }
 }
 
+async function checkWhistlist(req, res, next) {
+  const { id } = req.params
+  try {
+    const whistlist = await Whistlist.findByPk(id)
+    if (!whistlist) {
+      throw createError(404, 'Whistlist ID Not Found')
+    } else {
+      next()
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
-  authentication, authorize, checkCategory, checkBanner
+  authentication, authorize, checkCategory, checkBanner, checkWhistlist
 }

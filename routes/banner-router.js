@@ -3,6 +3,8 @@ const { authentication, authorize, checkBanner } = require('../middleware/auth')
 
 const router = require('express').Router()
 
+router.get('/active', BannerController.activeBanner)
+
 router.use(authentication);
 router.use(authorize);
 

@@ -1,4 +1,5 @@
 const { Banner, Category } = require('../models');
+const { Op } = require("sequelize");
 
 class BannerController {
 
@@ -64,6 +65,23 @@ class BannerController {
       res.status(200).json({ status: 200, message: 'Success deleted banner' })
     } catch (err) {
       next(err)
+    }
+  }
+
+  static async activeBanner(req, res, next) {
+    try {
+      const banners = await Banner.findAll(
+        {
+          where: {
+            is_active: 'true',
+            end_date: {
+              [Op.gte]: new Date(new Date().toISOString().slice(0, 10))
+            }
+          }
+        })
+      res.status(200).json({ status: 200, banners })
+    } catch (error) {
+      next(error)
     }
   }
 }
