@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const { verifyToken } = require('../helpers/jwt');
-const { User, Category, Banner, Whistlist } = require('../models');
+const { User, Category, Banner, Whistlist, Cart } = require('../models');
 
 async function authentication(req, res, next) {
   const { access_token } = req.headers;
@@ -36,6 +36,20 @@ async function authorize(req, res, next) {
   try {
     const user = await User.findByPk(UserId); 
     if (user.role === "admin") {
+      next();
+    } else {
+      throw createError(401, "Not authorize");
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function authorizeCustomer(req, res, next) {
+  const UserId = req.logedInUser.id;
+  try {
+    const user = await User.findByPk(UserId); 
+    if (user.role === "customer") {
       next();
     } else {
       throw createError(401, "Not authorize");
@@ -87,6 +101,32 @@ async function checkWhistlist(req, res, next) {
   }
 }
 
+async function cekCart(req, res, next) {
+  const { id } = req.params
+  const UserId = req.logedInUser.id
+
+  try {
+    const cart = await Cart.findByPk(id)
+    if (!cart) {
+      throw createError(404, 'Cart ID Not Found')
+    } else {
+      if (cart.UserId === UserId) {
+        next()  
+      } else {
+        throw createError(401, "Not authorize");
+      }
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
-  authentication, authorize, checkCategory, checkBanner, checkWhistlist
+  authentication,
+  authorize,
+  checkCategory,
+  checkBanner,
+  checkWhistlist,
+  authorizeCustomer,
+  cekCart
 }
