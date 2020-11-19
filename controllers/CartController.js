@@ -20,12 +20,12 @@ class CartController {
       const product = await Product.findByPk(ProductId)
       const cart = await Cart.findOne({ where: { ProductId, UserId } })
       if (cart) {
-        // const tempAmount = cart.amount + amount
-        if (product.stock >= amount) {
-          const result = await Cart.update({ amount }, {
+        const tempAmount = cart.amount + 1
+        if (product.stock >= tempAmount) {
+          const result = await Cart.update({ amount: tempAmount }, {
             where: { id: cart.id }, returning: true
           })
-          res.status(200).json({ status: 200, cart: { UserId, ProductId, amount } })
+          res.status(200).json({ status: 200, cart: { UserId, ProductId, amount: tempAmount } })
         } else {
           throw createError(400, 'sorry the amount cannot exceed the stock')
         }
@@ -44,8 +44,7 @@ class CartController {
   }
 
   static async patch(req, res, next) {
-    let { ProductId, amount, patch } = req.body
-    patch = patch || 'add'
+    let { ProductId, amount } = req.body
     const { id } = req.params
     const UserId = req.logedInUser.id
     try {
