@@ -1669,3 +1669,305 @@
         ```
 
   </details>
+
+<br>
+
+#  Cart
+
+## 1. Create add New Product to Cart
+
+<details>
+  <summary>Click to expand!</summary>
+
+- **URL**
+
+  `/carts`
+
+- **Method:**
+
+  `POST`
+
+- **Headers**
+
+  ```json
+  { "access_token": "eyJhbGciOiJIUzI1NiJ9. ..." }
+  ```
+
+- **Data Params**
+
+  _data_
+
+  ```json
+  {
+    "ProductId": 19
+  }
+  ```
+
+- **Success Response**
+
+  - **Code:** 201 <br />
+    **Content:**
+    ```json
+    {
+      "status": 200,
+      "cart": {
+        "UserId": 6,
+        "ProductId": 19,
+        "amount": 1
+      }
+    }
+    ```
+
+- **Error Response:**
+
+      * **Code:** 400 BAD  REQUEST <br />
+        **Content:**
+
+        ```json
+        {
+          "status": 500,
+          "message": "invalid input syntax for type integer: ''"
+        }
+        ```
+
+      OR
+
+      * **Code:** 401 UNAUTHORIZE <br />
+        **Content:**
+        ```json
+        {
+          "status": 401,
+          "message": "Authentication Failed"
+        }
+        ```
+
+      OR
+
+      * **Code:** 500 INTERNAL SERVER ERROR <br />
+        **Content:**
+        ```json
+        { "error" : "Internal Server Error Message" }
+        ```
+  </details>
+
+## 2. Read All Carts
+
+<details>
+  <summary>Click to expand!</summary>
+
+- **URL**
+
+  `/carts`
+
+- **Method:**
+
+  `GET`
+
+**Headers**
+
+```json
+{ "access_token": "eyJhbGciOiJIUzI1NiJ9. ..." }
+```
+
+- **Success Response**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "status": 200,
+      "carts": [
+        {
+          "id": 3,
+          "UserId": 6,
+          "ProductId": 13,
+          "amount": 1,
+          "createdAt": "2020-11-18T06:09:54.360Z",
+          "updatedAt": "2020-11-18T06:09:54.360Z",
+          "Product": {
+            "id": 13,
+            "name": "Test Product Name",
+            "image_url": "https://image.url/image.jpg",
+            "price": 12000,
+            "stock": 0,
+            "CategoryId": 3,
+            "UserId": 5,
+            "createdAt": "2020-11-11T15:41:30.076Z",
+            "updatedAt": "2020-11-14T07:11:21.615Z"
+          }
+        },{...}
+      ]
+    }
+    ```
+
+- **Error Response:**
+
+      * **Code:** 401 UNAUTHORIZE <br />
+        **Content:**
+        ```json
+        {
+          "status": 401,
+          "message": "Authentication Failed"
+        }
+        ```
+
+      OR
+
+      * **Code:** 500 INTERNAL SERVER ERROR <br />
+        **Content:**
+        ```json
+        { "error" : "Internal Server Error" }
+        ```
+
+  </details>
+
+## 3. Update / Patch Cart Amount
+
+<details>
+  <summary>Click to expand!</summary>
+
+- **URL**
+
+  `/carts`
+
+- **Method:**
+
+  `PATCH`
+
+- **Headers**
+
+  ```json
+  { "access_token": "eyJhbGciOiJIUzI1NiJ9. ..." }
+  ```
+
+- **Data Params**
+
+  _data_
+
+  ```json
+  {
+    "ProductId": 19,
+    "amount": 11
+  }
+  ```
+
+- **Success Response**
+
+  - **Code:** 201 <br />
+    **Content:**
+    ```json
+    {
+      "status": 200,
+      "cart": {
+        "UserId": 6,
+        "ProductId": 19,
+        "amount": 11
+      }
+    }
+    ```
+
+- **Error Response:**
+
+      * **Code:** 400 BAD  REQUEST <br />
+        **Content:**
+
+        ```json
+        // Amount Exceed the stock
+        {
+          "message": "sorry the amount cannot exceed the stock",
+          "status": 400
+        }
+        // OR
+
+        // Amount Minus
+        {
+          "message": "You can delete this cart",
+          "status": 202
+        }
+        ```
+
+      OR
+
+      * **Code:** 401 UNAUTHORIZE <br />
+        **Content:**
+        ```json
+        {
+          "status": 401,
+          "message": "Authentication Failed"
+        }
+        ```
+
+      OR
+
+      * **Code:** 500 INTERNAL SERVER ERROR <br />
+        **Content:**
+        ```json
+        { "error" : "Internal Server Error Message" }
+        ```
+  </details>
+
+## 4. Delete Carts
+
+<details>
+  <summary>Click to expand!</summary>
+
+- **URL**
+
+  `/cars/:id`
+
+- **URL Params:**
+
+  `id=[integer]`
+
+- **Method:**
+
+  `DELETE`
+
+- **Headers**
+
+  ```json
+  { "access_token": "eyJhbGciOiJIUzI1NiJ9. ..." }
+  ```
+
+- **Success Response**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "status": 200,
+      "message": "Product deleted from cart"
+    }
+    ```
+
+- **Error Response:**
+
+      * **Code:** 401 UNAUTHORIZE <br />
+        **Content:**
+        ```json
+        {
+          "status": 401,
+          "message": "Authentication Failed"
+        }
+        ```
+      
+      OR
+
+      * **Code:** 404 NOT FOUND <br />
+        **Content:**
+        ```json
+        {
+          "message": "Cart ID Not Found",
+          "status": 404
+        }
+        ```
+
+      OR
+
+      * **Code:** 500 INTERNAL SERVER ERROR <br />
+        **Content:**
+        ```json
+        { "error" : "Internal Server Error" }
+        ```
+
+  </details>
