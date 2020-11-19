@@ -14,6 +14,7 @@ router.get("/", (req, res, next) => {
 
 router.post("/register", UserController.register);
 router.post("/login", UserController.login);
+router.post('/googlesignin', UserController.googlesignin);
 
 router.use('/products', productRouter)
 router.use('/categories', categoryRouter)
