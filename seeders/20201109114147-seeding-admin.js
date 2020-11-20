@@ -11,17 +11,16 @@ module.exports = {
       role: "admin",
       createdAt: new Date(),
       updatedAt: new Date()
+    },
+    {
+      fullname: "Customer",
+      email: "customer@mail.com",
+      password: hashPassword("customer123"),
+      role: "customer",
+      createdAt: new Date(),
+      updatedAt: new Date()
     }]
     await queryInterface.bulkInsert("Users", admin, {});
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
   },
 
   down: async (queryInterface, Sequelize) => {

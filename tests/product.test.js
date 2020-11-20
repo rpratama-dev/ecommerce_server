@@ -10,8 +10,8 @@ afterAll(async (done) => {
 })
 
 // Please place here token admin and token user
-const admin_access_token = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NDIsImZ1bGxuYW1lIjoiU2F0cmlhIFBlcm1hdGEiLCJlbWFpbCI6InNhdHJpYUBtYWlsLmNvbSJ9.arVTAdaeX-Jdz-SCC6bPY4JSgu7nMeTBzeuzOHA0F2U";
-const customer_access_token = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NDQsImZ1bGxuYW1lIjoiQ3VzdG9tZXIgUGVybWF0YSIsImVtYWlsIjoiY3VzdG9tZXJAbWFpbC5jb20ifQ.4_1mc1yXZbJ1bbQhMD6z-rH_eCh9iSRjuUZe71ZbQ2s";
+let admin_access_token = "";
+let customer_access_token = "";
 
 let data = {};
 let api_url = '/api/products/';
@@ -19,6 +19,58 @@ let name = "Product 1";
 let image_url = "https://www.jakartanotebook.com/images/products/100/63/37709/2/sepatu-sneaker-huarache-sporty-size-37-black-1.jpg";
 let price = 50000;
 let stock = 11;
+
+// IMPORTANT: FIRST RUN SEEDING DATABASE
+// IMPORTANT: FIRST RUN SEEDING DATABASE
+// IMPORTANT: FIRST RUN SEEDING DATABASE
+// IMPORTANT: FIRST RUN SEEDING DATABASE
+
+describe('POST /api/login', () => {
+  it('Test Case 1: Login Admin succesfully', async (done) => {
+    const fullname = 'Admin CMS'
+    const email = 'admin@mail.com'
+    const password = 'admin123'
+    
+    const response = await request(app)
+      .post('/api/login')
+      .send({ email, password });
+
+    const { status, body } = response;
+    const { user } = body;
+    admin_access_token = body.access_token;
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty("status", 200);
+    expect(body).toHaveProperty("access_token", expect.any(String));
+    expect(user).toHaveProperty("id", expect.any(Number));
+    expect(user).toHaveProperty("fullname", fullname);
+    expect(user).toHaveProperty("email", email);
+    done();
+  });
+
+  it('Test Case 2: Login Customer Succesfully', async (done) => {
+    const fullname = 'Customer'
+    const email = 'customer@mail.com'
+    const password = 'customer123'
+
+    const response = await request(app)
+      .post('/api/login')
+      .send({ email, password });
+
+    const { status, body } = response;
+    const { user } = body;
+    customer_access_token = body.access_token;
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty("status", 200);
+    expect(body).toHaveProperty("access_token", expect.any(String));
+    expect(user).toHaveProperty("id", expect.any(Number));
+    expect(user).toHaveProperty("fullname", fullname);
+    expect(user).toHaveProperty("email", email);
+    console.log("Use this Token: ", body.access_token)
+    done();
+  });
+})
 
 // Insert new product
 describe('POST /api/products', () => {
@@ -288,18 +340,9 @@ describe('GET /api/products/', () => {
       .expect(200, {
         status: 200,
         products: [
-          { id: data.id, name, image_url, price, stock, createdAt: data.createdAt, updatedAt: data.updatedAt }
+          { id: data.id, name, image_url, price, stock, CategoryId: null, createdAt: data.createdAt, updatedAt: data.updatedAt, Category: null }
         ]
       });
-
-    const { body } = response;
-    const products = body.products[0];
-    expect(body).toHaveProperty("status", 200);
-    expect(products).toHaveProperty("id", ProductId);
-    expect(products).toHaveProperty("name", name);
-    expect(products).toHaveProperty("image_url", image_url);
-    expect(products).toHaveProperty("price", price);
-    expect(products).toHaveProperty("stock", stock);
     done();
   });
 
@@ -313,12 +356,9 @@ describe('GET /api/products/', () => {
       .expect(200, {
         status: 200,
         product: {
-          id: data.id, name, image_url, price, stock, createdAt: data.createdAt, updatedAt: data.updatedAt
+          id: data.id, name, image_url, price, stock, CategoryId: null, createdAt: data.createdAt, updatedAt: data.updatedAt, Category: null
         }
       });
-
-    const { body } = response;
-    const { product } = body;
     done();
   });
 

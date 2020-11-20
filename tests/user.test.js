@@ -3,10 +3,10 @@ const app = require('../server');
 const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
 
-// afterAll(async (done) => {
-//   await queryInterface.bulkDelete("Users");
-//   done();
-// })
+afterAll(async (done) => {
+  await queryInterface.bulkDelete("Users");
+  done();
+})
 
 // Customer 
 const email = "customer@mail.com";
@@ -17,7 +17,7 @@ describe('POST /api/register', () => {
   it('Test Case 1 : Test Register Success', async (done) => {
     const response = await request(app)
       .post('/api/register')
-      .send({ fullname, role, email, password });
+      .send({ fullname, email, password });
     const { body, status } = response;
     // Expectation
     const { user } = body;
@@ -32,7 +32,7 @@ describe('POST /api/register', () => {
   it('Test Case 2 : Test Register Failed, Email already exists', async (done) => {
     const response = await request(app)
       .post('/api/register')
-      .send({ fullname, role, email, password })
+      .send({ fullname, email, password })
       .expect(400, {
         status: 400,
         message: [
