@@ -43,10 +43,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: "true",
       validate: {
-        notEmpty: {
-          args: true,
-          msg: 'Status is required, can\'t be empty!'
-        },
         isIn: {
           args: [['true', 'false']],
           msg: 'Status must be true or false'

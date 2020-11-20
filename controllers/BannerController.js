@@ -1,5 +1,6 @@
 const { Banner, Category } = require('../models');
 const { Op } = require("sequelize");
+const createError = require('http-errors')
 
 class BannerController {
 
@@ -35,9 +36,9 @@ class BannerController {
   }
 
   static async update(req, res, next) {
-    const { name, image_url, is_active, start_date, end_date, CategoryId } = req.body;
+    const { name, image_url, start_date, end_date, CategoryId } = req.body;
     const { id } = req.params;
-    const input = { name, image_url, is_active, start_date, end_date, CategoryId };
+    const input = { name, image_url, start_date, end_date, CategoryId };
     try {
       const banner = await Banner.update(input, { where: { id }, returning: true})
       res.status(200).json({ status: 200, banner: banner[1][0] })
@@ -47,11 +48,17 @@ class BannerController {
   }
 
   static async patch(req, res, next) {
-    const { is_active } = req.body;
+    let { is_active } = req.body;
     const { id } = req.params;
-    const input = { is_active };
     try {
-      const banner = await Banner.update(input, { where: { id }, returning: true})
+      const dataBanner = await Banner.findByPk(id)
+      const currentDate = new Date(new Date().toISOString().slice(0, 10))
+      if (new Date(dataBanner.end_date) < currentDate) {
+        is_active = 'false';
+        await Banner.update({ is_active }, { where: { id }, returning: true })
+        throw createError(400, 'Banner is due, can\'t set to active')
+      }
+      const banner = await Banner.update({ is_active }, { where: { id }, returning: true})
       res.status(200).json({ status: 200, banner: banner[1][0] })
     } catch (error) {
       next(error)
